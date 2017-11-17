@@ -1,14 +1,22 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Select } from 'antd';
-import Simditor from 'simditor';
-import $ from 'jquery';
-import 'simditor/styles/simditor.css';
+import 'antd/dist/antd.min.css'
+import theme from 'react-quill/dist/quill.snow.css';
+import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
 
 
 
 const Option = Select.Option;
-
+const modules= {
+    toolbar: [
+      [{ 'header': [1, 2, false] }],
+      ['bold', 'italic', 'underline','strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image'],
+      ['clean']
+    ],
+  };
 
 class NoteAdd extends Component{
     constructor(props){
@@ -22,36 +30,46 @@ class NoteAdd extends Component{
         }
     }
     componentDidMount(){
-        var textbox = ReactDOM.findDOMNode(this.refs.textarea);
-        this.editor = new Simditor({
-          textarea: $(textbox),
-          toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color',
-            'ol', 'ul', 'blockquote', 'code', 'table', 'link', 'image', 'indent', 'outdent', 'alignment', 'hr']
-        });
-        this.editor.on("valuechanged", (e, src) => {
-          this.props.fields.body.onChange(this.editor.getValue());
-        });
+  
     }
     checkType(e){
-        console.log(e)
+        console.log(e);
+        this.setState({
+            noteType:e
+        })
     }
+    changeTitle(e){
+        this.setState({
+            title:e.target.value
+        })
+    }
+    uploadImg(file,callback){
+        const fileUrl = "http://tupian.enterdesk.com/2013/lxy/12/9/3/1.jpg"
+        callback(fileUrl)
+    }
+    handleChange(){
+
+    }
+
     render(){
         return (
             <div>
                 <div>
                     <span>类型：</span>
-                    <Select onChange={this.checkType}>
-                        <Option key='1'></Option>
-                        <Option key='2'></Option>
-                        <Option key='3'></Option>
+                    <Select onChange={this.checkType.bind(this)} style={{ width: 120 }}defaultValue='1'>
+                        <Option key='1'>原创</Option>
+                        <Option key='2'>转载</Option>
+                        <Option key='3'>其他</Option>
                     </Select>
                 </div>
                 <div>
                     <span>标题：</span>
-                    <input  type="text" value={this.state.title}/>
+                    <input  type="text" value={this.state.title} onChange={this.changeTitle.bind(this)}/>
                 </div>
                 <div>
-                    <textarea className="form-control" ref='textarea' rows="50" />
+                <ReactQuill value={this.state.content}
+                    modules={modules}
+                  onChange={this.handleChange} />
                 </div>
             </div>
         );
