@@ -1,13 +1,9 @@
 import React,{Component} from 'react';
-import ReactDOM from 'react-dom';
-import { Select } from 'antd';
+import { Input, Button } from 'antd';
 import 'antd/dist/antd.min.css'
 import theme from 'react-quill/dist/quill.snow.css';
 import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
 
-
-
-const Option = Select.Option;
 const modules= {
     toolbar: [
       [{ 'header': [1, 2, false] }],
@@ -16,7 +12,56 @@ const modules= {
       ['link', 'image'],
       ['clean']
     ],
-  };
+};
+
+const styles = {
+    container:{
+        width:'80%',
+        margin: 'auto',
+        padding:10,
+        height:'100%',
+    },
+    item:{
+        marginTop:10,
+        flexDirection:'column'
+    },
+    itemContent:{
+        marginTop:10,
+        flexDirection:'column',
+        padding:2,
+        height:500
+    },
+    subItemContent:{
+        marginTop:5,
+        marginBottom:2,
+        height:450
+    },
+    subItem:{
+        marginTop:5,
+       
+    },
+    subItemText:{
+        marginLeft:2,
+        fontSize:18
+    },
+    noteType:{
+        marginTop:10,
+        width:'100%'
+    },
+    itemBtn:{
+        display:'flex',
+        marginTop:50,
+        flex:1,
+        flexDirection:'row-reverse',
+        justifyContent:'right',
+        width:'100%',
+        height:50
+    },
+    commitBtn:{
+        width:100,
+        height:40
+    }
+}
 
 class NoteAdd extends Component{
     constructor(props){
@@ -25,18 +70,10 @@ class NoteAdd extends Component{
             title:'',
             author:'',
             content:'',
-            noteType:'',
-            personalType:'',
         }
     }
     componentDidMount(){
   
-    }
-    checkType(e){
-        console.log(e);
-        this.setState({
-            noteType:e
-        })
     }
     changeTitle(e){
         this.setState({
@@ -47,30 +84,32 @@ class NoteAdd extends Component{
         const fileUrl = "http://tupian.enterdesk.com/2013/lxy/12/9/3/1.jpg"
         callback(fileUrl)
     }
-    handleChange(){
-
+    handleChange(text){
+        this.setState({
+            "content":text
+        })
+    }
+    commitNote(e){
+        // httpGet('http://www.baidu.com')
+        alert(JSON.stringify(this.state));
     }
 
     render(){
         return (
-            <div>
-                <div>
-                    <span>类型：</span>
-                    <Select onChange={this.checkType.bind(this)} style={{ width: 120 }}defaultValue='1'>
-                        <Option key='1'>原创</Option>
-                        <Option key='2'>转载</Option>
-                        <Option key='3'>其他</Option>
-                    </Select>
+            <div style={styles.container}>
+                <div style={styles.item}>
+                    <span style={styles.subItemText}>标题：</span>
+                    <Input style={styles.subItem} type="text" value={this.state.title} onChange={this.changeTitle.bind(this)}/>
                 </div>
-                <div>
-                    <span>标题：</span>
-                    <input  type="text" value={this.state.title} onChange={this.changeTitle.bind(this)}/>
+                <div style={styles.itemContent}>
+                    <span style={styles.subItemText}>内容</span>
+                    <ReactQuill  style={styles.subItemContent} value={this.state.content}
+                        modules={modules}
+                    onChange={this.handleChange.bind(this)} />
                 </div>
-                <div>
-                <ReactQuill value={this.state.content}
-                    modules={modules}
-                  onChange={this.handleChange} />
-                </div>
+                <div style={styles.itemBtn}>
+                    <Button style={styles.commitBtn} type="primary" onClick={this.commitNote.bind(this)}>确定</Button>
+                </div> 
             </div>
         );
     }
