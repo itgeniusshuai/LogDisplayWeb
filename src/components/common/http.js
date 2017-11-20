@@ -1,10 +1,12 @@
 
-function httpGet(url,params,headers){
-    fetch(url).then((data) => {data}).then( data => {
-        alert(data)
-    }).catch(
-        (err) => {
-            return err;
-        }
-    );
-};
+const httpUtils = {
+    httpGet:function(url,callback,errCallBack,params,headers){
+        fetch(url).then((data) => data.json).then( data => {
+            callback(data)
+        }).catch(
+            (err) => {
+              errCallBack(err)
+            }
+        );
+    }
+}

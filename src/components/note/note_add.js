@@ -34,7 +34,8 @@ const styles = {
     subItemContent:{
         marginTop:5,
         marginBottom:2,
-        height:450
+        height:450,
+        borderRadius:40
     },
     subItem:{
         marginTop:5,
@@ -91,6 +92,8 @@ class NoteAdd extends Component{
     }
     commitNote(e){
         // httpGet('http://www.baidu.com')
+        // 父级目录由调用者通过属性传入
+        const parentDir = this.props.parentDir;
         alert(JSON.stringify(this.state));
     }
 
@@ -102,7 +105,7 @@ class NoteAdd extends Component{
                     <Input style={styles.subItem} type="text" value={this.state.title} onChange={this.changeTitle.bind(this)}/>
                 </div>
                 <div style={styles.itemContent}>
-                    <span style={styles.subItemText}>内容</span>
+                    <span style={styles.subItemText}>内容：</span>
                     <ReactQuill  style={styles.subItemContent} value={this.state.content}
                         modules={modules}
                     onChange={this.handleChange.bind(this)} />

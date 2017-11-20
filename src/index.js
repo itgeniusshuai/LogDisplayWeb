@@ -5,5 +5,5 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import NoteAdd from './components/note/note_add'
 
-ReactDOM.render(<NoteAdd />, document.getElementById('root'));
+ReactDOM.render(<NoteAdd parentDir='java'/>, document.getElementById('root'));
 registerServiceWorker();
