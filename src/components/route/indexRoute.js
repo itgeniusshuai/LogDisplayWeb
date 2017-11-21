@@ -38,7 +38,9 @@ const loadTreeNodes = (data,group) => {
     return data.map((item) => {
       if (item.isFile != 1) {
         return (
-          <TreeNode title={item.name} key={item.id} dataRef={item}>
+          <TreeNode title={item.name} key={item.id} dataRef={item} onSelect={() => {
+              this.title.click()
+          }}>
             {loadTreeNodes(item.subItems,group)}
           </TreeNode>
         );
@@ -48,7 +50,7 @@ const loadTreeNodes = (data,group) => {
           <Link to={linkTo}>{item.name}</Link>
       );
       return (
-        <TreeNode title={title} key={item.id}  dataRef={item} >
+        <TreeNode title={title} key={item.id}  dataRef={item} onSelect={() =>{this.title.click()}}>
             </TreeNode>);
     });
   }
@@ -59,7 +61,8 @@ const Group = ({match}) => {
         return (
             <Tree showLine onSelect={(selectedKeys, info) => {
                 let selectedKey = selectedKeys[0];
-            }} >
+               
+            }}  style={styles.tree}>
                 {loadTreeNodes(noteTrees,group)}
             </Tree>
         );
@@ -67,7 +70,7 @@ const Group = ({match}) => {
         return (
             <Tree onSelect={(selectedKeys, info) => {
                 let selectedKey = selectedKeys[0];
-            }}>
+            }}  style={styles.tree}>
                 <TreeNode title='user' key='user' />
             </Tree>
         );
@@ -85,24 +88,25 @@ const Detail = ({match:{params}}) => {
 class IndexRouter extends Component{
     render(){
         return (
-            <div>
-                <Router>
-                    <div>
-                        <div>
-                            <ul>
-                                <li><Link to="/menu/note">note</Link></li>
-                                <li><Link to='/menu/user'>user</Link></li>
+            <div style={{display:'block',width:'100%',height:'100%',margin:0}}>
+                <Router style = {{flex:1}}>
+                    <div  style={styles.container}>
+                        <div style={styles.header}>
+                            <div style={styles.logo}></div>
+                            <ul style={styles.ul}>
+                                <li style={styles.li}><Link to="/menu/note">note</Link></li>
+                                <li style={styles.li}><Link to='/menu/user'>user</Link></li>
                             </ul>
                         </div>
-                        <div>
-                            <div>
-                                <Switch>
+                        <div style={styles.middle}>
+                            <div style={styles.left}>
+                                <Switch >
                                     <Route exact path='/' component={Group}/>
                                     <Route path='/menu/:group' component={Group}></Route>
                                 </Switch>
                             </div>
-                            <div>
-                            <Switch>
+                            <div style={styles.main}>
+                            <Switch >
                                     <Route path='/menu/:group/:detailId' component={Detail}></Route>
                             </Switch>
                             </div>
@@ -114,4 +118,58 @@ class IndexRouter extends Component{
     }
 }
 
+const styles = {
+    container:{
+        margin:0,
+        display:'flex',
+        flexDirection:'column',
+        height:'100%',
+        width:'100%'
+    },
+    header:{
+        margin:0,
+        height:'10%',
+        width:'100%',
+        display:'flex',
+        flexDirection:'row',
+        borderBottom:'2px cyan solid'
+    },
+    logo:{
+        width:300,
+        height:'100%'
+    },
+    ul:{
+        flex:1,
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'flex-start',
+        alignItems:'center'
+    },
+    li:{
+        float:'left',
+        listStyle:'none',
+        marginLeft:30,
+        fontSize:18
+    },
+    middle:{
+        width:'100%',
+        height:'90%',
+        display:'flex',
+        flexDirection:'row',
+    },
+    left:{
+        width:'10%',
+        height:'100%',
+        borderRight:'2px solid #ff44ff',
+        paddingLeft:20,
+        paddingTop:20
+    },
+    main:{
+        flex:1,
+    },
+    tree:{
+        marginLeft:20,
+        marginTop:20
+    }
+}
 export default IndexRouter;
