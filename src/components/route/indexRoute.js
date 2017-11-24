@@ -85,8 +85,24 @@ const Detail = ({match:{params}}) => {
     );
 }
 // 修改右键的默认行为，增加添加功能，添加时时候先调接口创建一个空文档，并且返回对应id，在已有的路由里面添加对应的路由
-class IndexRouter extends Component{
+class IndexRouter extends Component{   
     render(){
+        let params = {};
+        let req = {};
+        req.applyid = "100"
+        req.up_order_sn = '322342';
+        req.ux_order_sn = 'dfsdf';
+        req.check_photo = {'reg_card':'dfdfdf'}
+        req.check_date = '1990-12-12 12:12:12';
+        req.check_name = 'dfsdf';
+        req.check_phone = '135555555555'
+        req.check_address = 'beijing'
+        req.check_type = 1
+        req.check_status = 2
+        req.chec_content = 'dsfsdfsdf';
+        req.signStr = 'sdfdsf';
+        params.req = req;
+        console.log(JSON.stringify(req));
         return (
             <div style={{display:'block',width:'100%',height:'100%',margin:0}}>
                 <Router style = {{flex:1}}>
