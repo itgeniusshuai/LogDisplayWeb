@@ -5,6 +5,7 @@ import { Tree } from 'antd';
 import { Layout, Menu, Icon } from 'antd';
 import 'antd/dist/antd.css';
 import logoImg from '../../pic/logo.jpg'
+import NoteDetail from '../note/note_detail'
 
 
 const { Header, Sider, Content } = Layout;
@@ -84,7 +85,7 @@ class Home extends Component{
                         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
                             <Switch>
                                 <Route exact path='/' component={() => <span>default</span>}/>
-                                <Route path="/:sech/:detailId" component={({match}) => <span>{match.params.detailId}</span>}></Route>
+                                <Route path="/:sech/:detailId" component={({match}) => <NoteDetail detailId={match.params.detailId}>{match.params.detailId}</NoteDetail>}></Route>
                             </Switch>
                         </Content>
                     </Layout>                   
