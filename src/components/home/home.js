@@ -3,15 +3,61 @@ import ReactDOM from 'react-dom';
 import {Route,BrowserRouter as Router,Link,Switch} from 'react-router-dom';
 import { Tree } from 'antd';
 import { Layout, Menu, Icon } from 'antd';
-import './home.css';
 import 'antd/dist/antd.css';
+import logoImg from '../../pic/logo.jpg'
 
 
 const { Header, Sider, Content } = Layout;
 const TreeNode = Tree.TreeNode;
 const SubMenu = Menu.SubMenu;
-
-
+const noteTrees = [
+    {
+        'name':'java',
+        'id':1,
+        'isFile':0,
+        'subItems':[
+            {'name':'java基础',
+            'id':11,
+            'isFile':0,
+            'subItems':[{
+                'name':'集合',
+                'id':111,
+                'isFile':1
+                }
+            ]}
+        ]
+     },{
+        'name':'react',
+        'id':2,
+        'isFile':0,
+        'subItems':[
+            {'name':'rn',
+            'id':21,
+            'isFile':1,
+            'subItems':[
+                
+            ]}
+        ]
+    }
+];
+const loadTreeNodes = (data) => {
+    return data.map((item) => {
+        if (item.isFile != 1) {
+          return (
+            <TreeNode title={item.name} key={item.id} dataRef={item} >
+              {loadTreeNodes(item.subItems)}
+            </TreeNode>
+          );
+        }
+        var linkTo = '/detail/' + item.id;
+        let title = (
+            <Link to={linkTo}>{item.name}</Link>
+        );
+        return (
+          <TreeNode title={title} key={item.id}  dataRef={item} >
+              </TreeNode>);
+      });
+}
 class Home extends Component{
     constructor(props){
         super(props);
@@ -19,80 +65,85 @@ class Home extends Component{
             collapsed: false
         }
     }
-    toggle = () => {
-        this.setState({
-          collapsed: !this.state.collapsed,
-        });
-      }
+    
     render(){
         return (
-            <div>
+            <Layout>
+                <Header style={{ background: '#fff', padding: 0 ,height:'100px'}}>
+                       <img src={logoImg} width='100%' height='100%'/>
+                    </Header>
                 <Router>
-                    <div>
                     <Layout>
-                        <Sider
-                        trigger={null}
-                        collapsible
-                        collapsed={this.state.collapsed}
-                        >
-                        <div className="logo" >LogDiaplay</div>
-                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                            <SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
-                                <Menu.Item key="01">
-                                    <Link to="/home">
-                                        <Icon type="user" />
-                                        <span>nav 1</span>
-                                    </Link>
-                                </Menu.Item>
-                                <Menu.Item key="02">
-                                    <Link to="/system">
-                                        <Icon type="user" />
-                                        <span>nav 1</span>
-                                    </Link>
-                                </Menu.Item>
-                            </SubMenu>
-                            <Menu.Item key="1">
-                                <Link to="/user">
-                                    <Icon type="user" />
-                                    <span>nav 1</span>
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item key="2">
-                                <Link to="/camera">
-                                    <Icon type="video-camera" />
-                                    <span>nav 2</span>
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item key="3">
-                                <Link to="/upload">
-                                    <Icon type="upload" />
-                                    <span>nav 3</span>
-                                </Link>
-                            </Menu.Item>
-                            
-                        </Menu>
+                        <Sider>
+                            <Tree showLine onSelect={(selectedKeys, info) => {
+                                    let selectedKey = selectedKeys[0];
+                                }}  style={styles.tree}>
+                                    {loadTreeNodes(noteTrees)}
+                            </Tree>
                         </Sider>
-                        <Layout>
-                            <Header style={{ background: '#fff', padding: 0 }}>
-                                <Icon
-                                className="trigger"
-                                type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                                onClick={this.toggle}
-                                />
-                            </Header>
-                            <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-                                <Switch>
-                                    <Route exact path='/' component={() => <span>default</span>}/>
-                                    <Route path="/:sech" component={({match}) => <span>{match.params.sech}</span>}></Route>
-                                </Switch>
-                            </Content>
-                        </Layout>
-                    </Layout>
-                    </div>
+                        <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+                            <Switch>
+                                <Route exact path='/' component={() => <span>default</span>}/>
+                                <Route path="/:sech/:detailId" component={({match}) => <span>{match.params.detailId}</span>}></Route>
+                            </Switch>
+                        </Content>
+                    </Layout>                   
                 </Router>
-            </div>
+            </Layout>
         );
     }
+}const styles = {
+    container:{
+        margin:0,
+        display:'flex',
+        flexDirection:'column',
+        height:'100%',
+        width:'100%'
+    },
+    header:{
+        margin:0,
+        height:'10%',
+        width:'100%',
+        display:'flex',
+        flexDirection:'row',
+        borderBottom:'2px cyan solid'
+    },
+    logo:{
+        width:300,
+        height:'100%'
+    },
+    ul:{
+        flex:1,
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'flex-start',
+        alignItems:'center'
+    },
+    li:{
+        float:'left',
+        listStyle:'none',
+        marginLeft:30,
+        fontSize:18
+    },
+    middle:{
+        width:'100%',
+        height:'90%',
+        display:'flex',
+        flexDirection:'row',
+    },
+    left:{
+        width:'10%',
+        height:'100%',
+        borderRight:'2px solid #ff44ff',
+        paddingLeft:20,
+        paddingTop:20
+    },
+    main:{
+        flex:1,
+    },
+    tree:{
+        marginLeft:20,
+        marginTop:20
+    }
 }
-
 export default Home;
