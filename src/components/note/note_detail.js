@@ -12,22 +12,18 @@ class NoteDetail extends Component{
         }
     }
     componentDidMount(){
-        this.initData();
+        this.initData(this.props);
     }
     componentWillReceiveProps(nextProps){
         let state = {}
         console.log(nextProps)
-        this.setState({
-            detailId:nextProps.detailId,
-            parentId:nextProps.parentId
-        })
-        this.initData();
+        this.initData(nextProps);
     }
-    initData(){
+    initData(props){
         // 获取属性，详情id
-        let detailId = this.props.detailId;
-        let parentId = this.props.parentId;
-        console.log(detailId);
+        let detailId = props.detailId;
+        let parentId = props.parentId;
+        console.log('init'+detailId);
         // 调用接口查询数据
         let detail = {}
         detail.parentId = parentId;
