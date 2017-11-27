@@ -41,16 +41,16 @@ const noteTrees = [
         ]
     }
 ];
-const loadTreeNodes = (data) => {
+const loadTreeNodes = (data,parentId) => {
     return data.map((item) => {
         if (item.isFile != 1) {
           return (
             <TreeNode title={item.name} key={item.id} dataRef={item} >
-              {loadTreeNodes(item.subItems)}
+              {loadTreeNodes(item.subItems,item.id)}
             </TreeNode>
           );
         }
-        var linkTo = '/detail/' + item.id;
+        var linkTo = '/detail/' + parentId+ '/'+ item.id;
         let title = (
             <Link to={linkTo}>{item.name}</Link>
         );
@@ -70,22 +70,22 @@ class Home extends Component{
     render(){
         return (
             <Layout>
-                <Header style={{ background: '#fff', padding: 0 ,height:'100px'}}>
+                <Header style={{ background: '#fff', padding: 0 ,height:'100px',borderBottom:'2px solid #faf'}}>
                        <img src={logoImg} width='100%' height='100%'/>
                     </Header>
                 <Router>
-                    <Layout>
-                        <Sider>
+                    <Layout style={{backgroundColor:'white'}}>
+                        <Sider style={{backgroundColor:'white',padding:10,borderRight:'2px solid #faf'}}>
                             <Tree showLine onSelect={(selectedKeys, info) => {
                                     let selectedKey = selectedKeys[0];
                                 }}  style={styles.tree}>
-                                    {loadTreeNodes(noteTrees)}
+                                    {loadTreeNodes(noteTrees,0)}
                             </Tree>
                         </Sider>
                         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
                             <Switch>
-                                <Route exact path='/' component={() => <span>default</span>}/>
-                                <Route path="/:sech/:detailId" component={({match}) => <NoteDetail detailId={match.params.detailId}>{match.params.detailId}</NoteDetail>}></Route>
+                                <Route exact path='/' component={() => <span>欢迎来到个人笔记</span>}/>
+                                <Route path="/detail/:parentId/:detailId" component={({match}) => <NoteDetail detailId={match.params.detailId} parentId={match.params.parentId}>{match.params.detailId}</NoteDetail>}></Route>
                             </Switch>
                         </Content>
                     </Layout>                   

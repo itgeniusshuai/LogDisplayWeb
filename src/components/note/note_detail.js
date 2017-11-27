@@ -6,18 +6,36 @@ import 'antd/dist/antd.min.css'
 class NoteDetail extends Component{
     constructor(props){
         super(props)
-        this.state={}
+        this.state={
+            detailId:this.props.detailId,
+            parentId:this.props.parentId
+        }
     }
-    
     componentDidMount(){
+        this.initData();
+    }
+    componentWillReceiveProps(nextProps){
+        let state = {}
+        console.log(nextProps)
+        this.setState({
+            detailId:nextProps.detailId,
+            parentId:nextProps.parentId
+        })
+        this.initData();
+    }
+    initData(){
         // 获取属性，详情id
         let detailId = this.props.detailId;
+        let parentId = this.props.parentId;
+        console.log(detailId);
         // 调用接口查询数据
         let detail = {}
+        detail.parentId = parentId;
         detail.author = 'jack'
         detail.createTime = '2017-10-12 12:12:12'
         detail.title = 'java多线程'
-        detail.content = `Java安监局地方是否水电
+
+        detail.content = parentId +' ' + detailId + `Java安监局地方是否水电
         df
         sdf
         sd
@@ -45,9 +63,18 @@ class NoteDetail extends Component{
         this.setState(detail)
 
     }
+    addNote(){
+        alert('父id为'+this.props.parentId+'添加子文档');
+    }
+    editNote(){
+        alert('编辑id为'+this.props.detailId);
+    }
     render(){
         return (
             <div style={styles.container}>
+                <div style={styles.editDiv}>    
+                    <Button onClick={this.addNote.bind(this)} style={styles.editBtn}>添加{this.props.parentId}</Button>
+                    <Button onClick={this.editNote.bind(this)} style={styles.editBtn}>编辑</Button></div>
                 <div style={styles.box}>
                     <span style={styles.boxDetail}>标题</span>
                     <span>{this.state.title}</span>
@@ -84,6 +111,16 @@ const styles = {
     boxDetail:{
         marginRight:20,
         fontSize:16
+    },
+    editDiv:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'flex-end',
+        width:'100%',
+        paddingRight:10,
+    },
+    editBtn:{
+        marginRight:10
     },
     content:{
         display:'flex',
