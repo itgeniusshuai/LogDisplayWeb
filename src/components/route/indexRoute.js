@@ -85,7 +85,11 @@ const Detail = ({match:{params}}) => {
     );
 }
 // 修改右键的默认行为，增加添加功能，添加时时候先调接口创建一个空文档，并且返回对应id，在已有的路由里面添加对应的路由
-class IndexRouter extends Component{   
+class IndexRouter extends Component{ 
+    constructor(props){
+        super(props);
+        this.data = noteTrees;
+    }  
     render(){
         let params = {};
         let req = {};

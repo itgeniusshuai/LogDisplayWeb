@@ -6,6 +6,7 @@ import { Layout, Menu, Icon } from 'antd';
 import 'antd/dist/antd.css';
 import logoImg from '../../pic/logo.jpg'
 import NoteDetail from '../note/note_detail'
+import NoteRoute from '../note/noteRoute'
 
 
 const { Header, Sider, Content } = Layout;
@@ -85,7 +86,7 @@ class Home extends Component{
                         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
                             <Switch>
                                 <Route exact path='/' component={() => <span>欢迎来到个人笔记</span>}/>
-                                <Route path="/detail/:parentId/:detailId" component={({match}) => <NoteDetail detailId={match.params.detailId} parentId={match.params.parentId}>{match.params.detailId}</NoteDetail>}></Route>
+                                <Route path="/detail/:parentId/:detailId" component={({match}) => <NoteRoute detailId={match.params.detailId} parentId={match.params.parentId}>{match.params.detailId}</NoteRoute>}></Route>
                             </Switch>
                         </Content>
                     </Layout>                   

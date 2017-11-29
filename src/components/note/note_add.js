@@ -71,6 +71,7 @@ class NoteAdd extends Component{
             title:'',
             author:'',
             content:'',
+            isEdit:this.props.isEdit?true:false
         }
     }
     componentDidMount(){
