@@ -1,7 +1,7 @@
 
 const httpUtils = {
-    httpGet:function(url,callback,errCallBack,params,headers){
-        fetch(url,{body:params,method: 'GET'}).then((data) => data.json).then( data => {
+    httpGet:function(url,callback,errCallBack,headers){
+        fetch(url,{method: 'GET'}).then((data) => data.json).then( data => {
             callback(data)
         }).catch(
             (err) => {
@@ -10,6 +10,7 @@ const httpUtils = {
         );
     },
     httpPost:function(url,callback,errCallBack,params){
+        let formData = new FormData()
         fetch(url,{body:params,method: 'POST'}).then((data) => data.json).then( data => {
             callback(data)
         }).catch(

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^2.13.10",
+    "pubsub-js": "^1.5.7",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-quill": "^1.1.0",

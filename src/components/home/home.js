@@ -8,6 +8,7 @@ import logoImg from '../../pic/logo.jpg'
 import NoteDetail from '../note/note_detail'
 import NoteRoute from '../note/noteRoute'
 import { Button } from 'antd/lib/radio';
+import Pubsub from 'pubsub-js'
 
 
 const { Header, Sider, Content } = Layout;
@@ -73,9 +74,14 @@ class Home extends Component{
             noteTrees: noteTrees
         }
     }
-    addNode(node, parentId, noteList){
-        this.addNode1(node,parentId,noteList);
-        alert(JSON.stringify(noteList))
+    componentDidMount(){
+        Pubsub.subscribe('addNode',(msg,data)=>{
+            this.addNode(data.node,data.parentId)
+        });
+    }
+    addNode(node, parentId){
+        this.addNode1(node,parentId,this.state.noteTrees);
+        let noteList = this.state.noteTrees
         this.setState({noteTrees:noteList})
     }
     addNode1(node, parentId, noteList){
@@ -97,7 +103,6 @@ class Home extends Component{
             <Layout>
                 <Header style={{ background: '#fff', padding: 0 ,height:'100px',borderBottom:'2px solid #faf'}}>
                        <img src={logoImg} width='100%' height='100%'/>
-                       <Button onClick={(e) => {this.addNode({id:8,name:'python',isFile:0},11,this.state.noteTrees)}}></Button>
                     </Header>
                 <Router>
                     <Layout style={{backgroundColor:'white'}}>

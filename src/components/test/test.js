@@ -25,8 +25,6 @@ class Test extends Component{
                 this.addNode1(node,parentId,note.subItems)
             }
         })
-
-        
     }
     render(){
         return (

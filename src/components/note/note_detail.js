@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import { Input, Button } from 'antd';
-import 'antd/dist/antd.min.css'
+import 'antd/dist/antd.min.css';
+import Pubsub from 'pubsub-js';
 
 
 class NoteDetail extends Component{
@@ -60,10 +61,10 @@ class NoteDetail extends Component{
 
     }
     addNote(){
-        alert('父id为'+this.props.parentId+'添加子文档');
+        Pubsub.publish('addNode',{node:{id:8,name:'python',isFile:1},parentId:this.props.parentId})
     }
     editNote(){
-        alert('编辑id为'+this.props.detailId);
+        alert('编辑id为'+this.props.a);
     }
     render(){
         return (
@@ -95,7 +96,7 @@ const styles = {
         height:'100%',
         display:'flex',
         flexDirection:'column',
-        justifyContent:'center',
+        justifyContent:'flex-start',
         alignItems:'flex-start'
     },
     box:{
