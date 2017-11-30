@@ -6,6 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import NoteAdd from './components/note/note_add'
 import IndexRoute from './components/route/indexRoute';
 import Home from './components/home/home'
+import Test from './components/test/test'
 
 ReactDOM.render(<Home parentDir='java'/>, document.getElementById('root'));
 registerServiceWorker();

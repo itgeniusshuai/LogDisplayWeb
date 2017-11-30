@@ -7,6 +7,7 @@ import 'antd/dist/antd.css';
 import logoImg from '../../pic/logo.jpg'
 import NoteDetail from '../note/note_detail'
 import NoteRoute from '../note/noteRoute'
+import { Button } from 'antd/lib/radio';
 
 
 const { Header, Sider, Content } = Layout;
@@ -42,6 +43,7 @@ const noteTrees = [
         ]
     }
 ];
+
 const loadTreeNodes = (data,parentId) => {
     return data.map((item) => {
         if (item.isFile != 1) {
@@ -60,12 +62,34 @@ const loadTreeNodes = (data,parentId) => {
               </TreeNode>);
       });
 }
+
+
+
 class Home extends Component{
     constructor(props){
         super(props);
         this.state={
-            collapsed: false
+            collapsed: false,
+            noteTrees: noteTrees
         }
+    }
+    addNode(node, parentId, noteList){
+        this.addNode1(node,parentId,noteList);
+        alert(JSON.stringify(noteList))
+        this.setState({noteTrees:noteList})
+    }
+    addNode1(node, parentId, noteList){
+        if(noteList == null){
+            return null;
+        }
+        noteList.map((note) =>{
+            if(note.id == parentId){
+                note.subItems.push(node);
+                return 
+            }else if(note.isFile == 0){
+                this.addNode1(node,parentId,note.subItems)
+            }
+        })
     }
     
     render(){
@@ -73,6 +97,7 @@ class Home extends Component{
             <Layout>
                 <Header style={{ background: '#fff', padding: 0 ,height:'100px',borderBottom:'2px solid #faf'}}>
                        <img src={logoImg} width='100%' height='100%'/>
+                       <Button onClick={(e) => {this.addNode({id:8,name:'python',isFile:0},11,this.state.noteTrees)}}></Button>
                     </Header>
                 <Router>
                     <Layout style={{backgroundColor:'white'}}>
@@ -80,7 +105,7 @@ class Home extends Component{
                             <Tree showLine onSelect={(selectedKeys, info) => {
                                     let selectedKey = selectedKeys[0];
                                 }}  style={styles.tree}>
-                                    {loadTreeNodes(noteTrees,0)}
+                                    {loadTreeNodes(this.state.noteTrees,0)}
                             </Tree>
                         </Sider>
                         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
