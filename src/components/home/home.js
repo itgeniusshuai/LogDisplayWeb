@@ -32,10 +32,10 @@ class Home extends Component{
                     </Header>
                 <Router>
                     <Layout style={{backgroundColor:'white'}}>
-                        <Sider style={{backgroundColor:'white',padding:10,borderRight:'2px solid #faf'}}>
+                        <Sider style={{backgroundColor:'white',padding:10,borderRight:'2px solid #faf',width:'100%',overflow: 'auto', height: '80vh'}}>
                             <NoteTree style={styles.tree}/>
                         </Sider>
-                        <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+                        <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280,overflow: 'initial' }}>
                             <Switch>
                                 <Route exact path='/' component={() => <span>欢迎来到个人笔记</span>}/>
                                 <Route path="/detail/:parentId/:detailId" component={({match}) => <NoteRoute detailId={match.params.detailId} parentId={match.params.parentId}>{match.params.detailId}</NoteRoute>}></Route>

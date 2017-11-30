@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import { Input, Button } from 'antd';
 import 'antd/dist/antd.min.css';
 import Pubsub from 'pubsub-js';
+import HttpUtils from '../common/http'
 
 
 class NoteDetail extends Component{
@@ -33,29 +34,7 @@ class NoteDetail extends Component{
         detail.title = 'java多线程'
 
         detail.content = parentId +' ' + detailId + `Java安监局地方是否水电
-        df
-        sdf
-        sd
-        fs
-        df\n<br/>
-        sdf
-        s
-        dfs
-        df
-        sd
-        fs
-        f
-        sd
-        fsd
-        费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份
-        费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份
-        费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份
-        费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份
-        费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份
-        费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份
-        费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份
-        费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份
-        费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份费是的发水电费是的方式地方啥开发看看能否说的分开马赛克发上岛咖啡鼎折覆餗快递费是的那份
+        折覆餗快递费是的那份费是的发水电费是的方式地方啥开发看看能否说的分开马餗快递费是的那份
         `// 修改属性
         this.setState(detail)
 
@@ -64,7 +43,12 @@ class NoteDetail extends Component{
         Pubsub.publish('addNode',{node:{id:8,name:'python',isFile:1},parentId:this.props.parentId})
     }
     editNote(){
-        alert('编辑id为'+this.props.a);
+        // alert('编辑id为'+this.props.a);
+        let params = {};
+        params.signStr = '322'
+        params.id = 123
+        params.sessionId = 'dsfsfqq223d2'
+        HttpUtils.httpPost("http://localhost:8083/loansMid/test",(data)=>alert(JSON.stringify(data)),(err)=>alert('err'+JSON.stringify(err)))
     }
     render(){
         return (

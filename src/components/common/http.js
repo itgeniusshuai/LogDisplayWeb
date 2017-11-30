@@ -1,7 +1,7 @@
 
-const httpUtils = {
+const HttpUtils = {
     httpGet:function(url,callback,errCallBack,headers){
-        fetch(url,{method: 'GET'}).then((data) => data.json).then( data => {
+        fetch(url,{method: 'GET'}).then((data) => data.json()).then( data => {
             callback(data)
         }).catch(
             (err) => {
@@ -9,9 +9,12 @@ const httpUtils = {
             }
         );
     },
-    httpPost:function(url,callback,errCallBack,params){
-        let formData = new FormData()
-        fetch(url,{body:params,method: 'POST'}).then((data) => data.json).then( data => {
+    httpPost:function(url,params,callback,errCallBack){
+        let formData = new FormData();  
+        formData.append("id",'23');  
+        formData.append("password","admin123");  
+        fetch(url,{method: 'POST',body:'id=3',mode : 'cors', 
+        }).then((data) => data.json()).then( data => {
             callback(data)
         }).catch(
             (err) => {
@@ -20,3 +23,5 @@ const httpUtils = {
         );
     }
 }
+
+export default HttpUtils;
