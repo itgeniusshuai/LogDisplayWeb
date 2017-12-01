@@ -15,7 +15,6 @@ const HttpUtils = {
             paramsArr.push(k+'='+JSON.stringify(params[k]))
         }
         let paramsStr = paramsArr.join('&')
-        alert(paramsStr)
         fetch(url,{
             method: 'POST',
             headers: {

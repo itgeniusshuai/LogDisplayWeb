@@ -51,7 +51,7 @@ class NoteDetail extends Component{
         req.sessionId = 12312312
         params.req = req
         params.sessionId = 2342342
-        HttpUtils.httpPost("http://localhost:8083/loanPost/barringCarNotice?sessionId=23",params,(data)=>alert(JSON.stringify(data)),(err)=>alert('err'+JSON.stringify(err)))
+        HttpUtils.httpPost("http://192.168.201.217:8091/loanPost/barringCarNotice?sessionId=23",params,(data)=>alert(JSON.stringify(data)),(err)=>alert('err'+JSON.stringify(err)))
     }
     render(){
         return (
