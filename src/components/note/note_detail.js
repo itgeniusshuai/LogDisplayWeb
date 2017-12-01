@@ -44,11 +44,14 @@ class NoteDetail extends Component{
     }
     editNote(){
         // alert('编辑id为'+this.props.a);
-        let params = {};
-        params.signStr = '322'
-        params.id = 123
-        params.sessionId = 'dsfsfqq223d2'
-        HttpUtils.httpPost("http://localhost:8083/loansMid/test",(data)=>alert(JSON.stringify(data)),(err)=>alert('err'+JSON.stringify(err)))
+        let req = {};
+        let params = {}
+        req.signStr = '322'
+        req.id = 123
+        req.sessionId = 12312312
+        params.req = req
+        params.sessionId = 2342342
+        HttpUtils.httpPost("http://localhost:8083/loanPost/barringCarNotice?sessionId=23",params,(data)=>alert(JSON.stringify(data)),(err)=>alert('err'+JSON.stringify(err)))
     }
     render(){
         return (

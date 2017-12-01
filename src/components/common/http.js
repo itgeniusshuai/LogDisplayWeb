@@ -10,10 +10,19 @@ const HttpUtils = {
         );
     },
     httpPost:function(url,params,callback,errCallBack){
-        let formData = new FormData();  
-        formData.append("id",'23');  
-        formData.append("password","admin123");  
-        fetch(url,{method: 'POST',body:'id=3',mode : 'cors', 
+        let paramsArr = []
+        for(let k in params){
+            paramsArr.push(k+'='+JSON.stringify(params[k]))
+        }
+        let paramsStr = paramsArr.join('&')
+        alert(paramsStr)
+        fetch(url,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            mode:'no-cors',
+            body: paramsStr
         }).then((data) => data.json()).then( data => {
             callback(data)
         }).catch(
